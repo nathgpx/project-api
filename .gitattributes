@@ -1,2 +1,29 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+from flask import Flask, jsonify
+import csv
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return "hello"
+
+@app.route('/songs')
+def ler_csv():
+    csvfile = "spf.csv"
+
+    dados = []
+
+    with open(csvfile, mode='r', newline='', encoding='ISO-8859-1') as file:
+        reader = csv.DictReader(file)
+        for  row in reader: 
+            dados.append(row)
+
+
+    return jsonify(dados)
+
+
+if __name__ == "__main__":
+    app.run()
